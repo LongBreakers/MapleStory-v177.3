@@ -1,0 +1,15 @@
+[ENABLE]
+//Physical God Mode
+0188A6AE: // 0F 85 0A 42 00 00 8D 8D B0 00 00 00 E8 51 59 D0 FE 85 C0
+db 0F 84
+
+// Magical God Mode
+00C6F15F: // 00 55 8D 6C 24 90 83 EC 70 6A FF 68 60 DE C8 01 64 A1 00 00 00 00
+
+
+[disable]
+0188A6AE: // 74 ? 8D ? ? ? ? ? E8 ? ? ? ? 85 C0 0F 85 ? ? ? ? 8D ? ? ? ? ? E8 [jne below]
+db 0F 85
+
+00C6F15F: // add [ebp-73],dl  scroll up from this AOB: 33 FF 39 BE ? ? ? ? 75 ? 8B 8E
+db 00 55 8D 6C 24 90
