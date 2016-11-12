@@ -1,0 +1,13 @@
+[ENABLE]
+017D5AA0+6: // Hide Character
+db 01
+
+017D69DE+6: // Hide Name + Medal
+db 01
+
+[DISABLE]
+017D5AA0+6: // 80 BE ? ? ? ? 00 74 ? BD
+db 00
+
+017D69DE+6: // 80 BE ? ? ? ? 00 74 ? 6A 00 6A 00 8B CE
+db 00
