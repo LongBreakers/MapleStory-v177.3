@@ -1,0 +1,84 @@
+[enable]
+define(CWvsContext__OnKey,019DF8C0) //A1 ?? ?? ?? ?? 85 C0 74 ?? 8D 48 ?? 8B 01 8B 00
+define(TSingleton_CWndMan___ms_pInstance,023B1C4C) //8B ? ? ? ? ? C6 ? ? ? E8 ? ? ? ? 8B ? BA ? ? ? ? C6 [POINTER]
+//00 00 00 00 3C C4   11 03 18 C4 11 03 F4
+alloc(hook_hp, 128)
+alloc(hook_mp, 128)
+alloc(key_press,128)
+label(return_hp)
+label(return_mp)
+
+define(CTRL,001D0000)
+define(SHIFT,002A0000)
+define(INSERT,01520000)
+define(DEL,01530000)
+define(HOME,01470000)
+define(END,014F0000)
+define(PAGEUP,01490000)
+define(PAGEDOWN,01510000)
+define(ALT,00380000)
+
+015BD42E:
+jmp hook_hp
+db 90 90 90 90 90 90 90
+return_hp:
+
+hook_hp:
+cmp eax, #50 //% To hp on
+jnl return_normal_hp
+pushad
+mov eax,HOME
+call key_press
+popad
+
+return_normal_hp:
+cmp eax,ecx
+jnl 015BD449
+cmp [esi+00002B20],ebx
+jle 015BD441
+jmp return_hp
+
+015BD495:
+jmp hook_mp
+db 90 90 90 90 90 90 90
+return_mp:
+
+hook_mp:
+cmp eax, #10 //% To mp on
+jnl return_normal_mp
+pushad
+mov eax,INSERT
+call key_press
+popad
+
+return_normal_mp:
+cmp eax,ecx
+jnl 015BD4B0
+cmp [esi+00002B24],ebx
+jle 015BD4A8
+
+jmp return_mp
+
+key_press:
+mov esi,[TSingleton_CWndMan___ms_pInstance] // 8B 15 ? ? ? ? 85 D2 74 23
+mov ecx,[esi+A8]
+push eax
+push 00
+call CWvsContext__OnKey
+ret
+
+[disable]
+015BD42E: //CUI_StatusBar: 7D ? 39 ? ? ? 00 00 7E ? 8B CE - up to cmp
+cmp eax,ecx
+jnl 015BD449
+cmp [esi+00002B20],ebx
+jle 015BD441
+
+015BD495: //7D ? 39 ? ? ? 00 00 7E ? 8B CE - scroll to cmp part (2nd)
+cmp eax,ecx
+jnl 015BD4B0
+cmp [esi+00002B24],ebx
+jle 015BD4A8
+
+dealloc(hook_mp)
+dealloc(key_press)
