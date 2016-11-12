@@ -1,0 +1,14 @@
+[ENABLE]
+01A898A0: // Themida CRCs
+db 33 C0 C3
+
+006997F0: // Debug Register Check
+db 33 C0 C3
+
+[DISABLE]
+01A898A0: // 55 8B EC 6A FF 68 ? ? ? ? 64 A1 00 00 00 00 50 81 EC ? ? 00 00 A1 ? ? ? ? 33 C5 89 ? ? 53 56 57 50 8D ? ? 64 A3 00 00 00 00 89 ? ? ? ? ? C7
+db 55 8B EC
+
+006997F0: // 55 8B EC 81 EC ? ? 00 00 A1 ? ? ? ? 33 C5 89 45 FC 53 56 57 [Second Result]
+db 55 8B EC
+// 55 8B EC 81 EC ? ? ? ? A1 ? ? ? ? 33 C5 89 45 ? 53 56 57 E9 ? ? ? ? 50 39 BF ? ? ? ?
