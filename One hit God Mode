@@ -1,0 +1,21 @@
+// CWvsContext: 8B 3D ? ? ? ? 8B ? ? 8D ? ? 8B
+// tHitAvoidPeriod: 8B 91 ? ? ? ? 6A ? 8D ? ? ? ? ? ? 50
+
+[ENABLE]
+alloc(HitAvoidPeriod_Hook,128)
+label(return)
+
+HitAvoidPeriod_Hook:
+mov edx,#2147483647 // Set character blink time after hit in milliseconds
+jmp return
+
+0188CA0E:
+jmp HitAvoidPeriod_Hook
+db 90
+return:
+
+[DISABLE]
+0188CA0E: // 8B 91 ? ? ? ? 6A ? 8D ? ? ? ? ? ? 50
+mov edx,[ecx+000081E0]
+
+dealloc(HitAvoidPeriod_Hook)
