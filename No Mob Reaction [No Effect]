@@ -1,0 +1,9 @@
+//V177.3
+[ENABLE]
+00C66A50: // No mob reaction, hitmarks or damage
+ret 0068
+
+
+[DISABLE]
+00C66A50: //74 ? 8B 86 ? ? ? ? 3B ? ? ? 75 ? FF 15 [ IN xx ret 0068]
+db 6A FF 68
