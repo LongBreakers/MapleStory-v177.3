@@ -1,0 +1,9 @@
+define(Familiar_TryDoingAttack,00804590) //85 ? 75 ? F7 ? F7 ? 89 54 ? ? 89 7C (func start)
+
+[ENABLE]
+Familiar_TryDoingAttack:
+db C3 90 90
+
+[DISABLE]
+Familiar_TryDoingAttack:
+sub esp,68
