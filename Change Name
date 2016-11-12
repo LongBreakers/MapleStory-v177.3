@@ -1,0 +1,59 @@
+define(hook_address, 018B5292) //"CHAR_JOB_SUB"
+//8D 47 ? 50 8D 8D ? ? ? ? E8 ? ? ? ? 8B 4F ? 8D 47 ? 51 50 E8 ? ? ? ? 8B 35 ? ? ? ?
+[ENABLE]
+Alloc(NameChanger,512)
+Alloc(NewIGN,12)
+label(Return)
+label(Loop)
+label(ExitLoop)
+label(NoInc)
+
+NewIGN:
+db 'Chịch' 0
+
+NameChanger:
+lea ecx,[edi+0C]
+push ebx
+push eax
+lea ebx,[NewIGN]
+
+Loop:
+cmp byte ptr[ecx],00
+je ExitLoop
+mov al,byte ptr[ebx]
+mov byte ptr[ecx],al
+cmp byte ptr[ebx],00
+je NoInc
+inc ebx
+
+NoInc:
+inc ecx
+jmp Loop
+
+ExitLoop:
+pop eax
+pop ebx
+mov edx,0C
+lea ecx,[edi+edx] //Original op
+push ecx //Original op
+mov edx,9C28
+lea ecx,[ebp+edx] //Original op
+jmp hook_address+0A //Return to original function
+
+hook_address:
+jmp NameChanger
+nop
+nop
+nop
+nop
+nop
+Return:
+
+[DISABLE]
+hook_address:
+lea ecx,[edi+0C]
+push ecx
+lea ecx,[ebp+00009C28]
+
+DeAlloc(NameChanger)
+DeAlloc(NewIGN)
